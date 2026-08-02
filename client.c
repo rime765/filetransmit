@@ -101,7 +101,7 @@ void* thread_recv(void* sock)
 	int fd=0;
 	usleep(1000);
 	while (1) {
-		recv(convs_ifo.fd, cvbuf, sizeof(cvbuf)-1,0);
+		recv(convs_ifo.fd, cvbuf, sizeof(cvbuf)-1,0);//接收代码存在问题
 		printf("recv:        %s\n",cvbuf);
 		if (strcmp(cvbuf, "strt")==0) {
 			memset(cvbuf, 0, sizeof(filename));
@@ -136,7 +136,7 @@ void* thread_recv(void* sock)
 
 void* thread_send(void* sock)
 {
-	
+
     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
     pthread_cond_wait(&cond, &mutex);
 	
