@@ -1,0 +1,11 @@
+套接字绑定失败: Invalid argument
+ad@ad-virtual-machine:~/公共的/代码/1/文件传输系统$ gcc server.c -o server.out
+ad@ad-virtual-machine:~/公共的/代码/1/文件传输系统$ ./server.out 
+套接字创建成功
+^C
+ad@ad-virtual-machine:~/公共的/代码/1/文件传输系统$ gcc server.c -o server.out 
+ad@ad-virtual-machine:~/公共的/代码/1/文件传输系统$ gcc client.c -o server.out 
+ad@ad-virtual-machine:~/公共的/代码/1/文件传输系统$  gcc server.c -o server.out 
+ad@ad-virtual-machine:~/公共的/代码/1/文件传输系统$ gcc client.c -o client.out 
+ad@ad-virtual-machine:~/公共的/代码/1/文件传输系统$ ./server.out 
+套接字创建成功
