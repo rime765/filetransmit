@@ -1,5 +1,7 @@
 
+
+
 build:
-	gcc client.c -o client.out
-	gcc server.c -o server.out
+	gcc client.c accement.c -o client.out
+	gcc server.c accement.c -o server.out
 	@./server.out
