@@ -136,35 +136,9 @@ void* thread_send(void* sock)
 
 	pthread_cond_signal(&cond);//通知主线程数据已取完
 
+
 	//文件准备
-	int fd=
-	open("./tt", O_RDONLY);
-	if (fd==-1) {
-		perror("open file erro");
-		pthread_exit(NULL);
-	}
-	puts("file open success\n");
-	//发送准备
-	lseek(fd, 0, SEEK_SET);
-	char rdbuf[5]={0};
-	//发送过程
-	send(convs_ifo.fd, "strt", 5,0);
 
-	while (1) {
-		read(fd, rdbuf, sizeof(rdbuf)-1); 
-		if(strlen(rdbuf)==0)
-		{
-			printf("send finish\n");
-			break;
-		}
-		printf("send:        %s\n",rdbuf);
-		send(convs_ifo.fd, rdbuf, strlen(rdbuf), 0);
-		printf("send:        %s\n",rdbuf);
-		memset(rdbuf, 0, sizeof(rdbuf));    
-	}
-	send(convs_ifo.fd, "endl", 5,0);
-
-	close(fd);
 	
 	while(1);
 	return NULL;
