@@ -23,16 +23,18 @@ typedef enum{
 typedef enum{
     conversation,
     filetransmission,
-    cdirectorytransmission
+    directorytransmission
 }command;
 
 typedef struct{
     filecode code;
     command cmd;
     char sendbuf[20];
+    int index;
 } accement;
 
 
 
 int filesend(int fd, char* filename);
+
 #endif
