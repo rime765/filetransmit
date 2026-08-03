@@ -36,5 +36,7 @@ typedef struct{
 
 
 int filesend(int fd, char* filename);
+void client_selectfile(int fd);
+char* server_getfilename(int fd);
 
 #endif

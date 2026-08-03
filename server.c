@@ -110,17 +110,7 @@ void* thread_recv(void* sock)
 	convstion convs_ifo=*(convstion*)sock;
 	pthread_mutex_unlock(&mutex);
 
-	char cvbuf[5]={0};
-	char filename[5]={0};
-	int fd=0;
-	while (1) {
-		recv(convs_ifo.fd, cvbuf, sizeof(cvbuf)-1,0);
-		
-		memset(cvbuf, 0, sizeof(filename));
-		printf("recv:        %s\n",cvbuf);
-	}
-
-	return NULL;
+	
 }
 void* thread_send(void* sock)
 {
@@ -136,11 +126,16 @@ void* thread_send(void* sock)
 
 	pthread_cond_signal(&cond);//通知主线程数据已取完
 
-
 	//文件准备
-
-	
-	while(1);
+	char filename[20]={0};
+	while(1){
+		strncpy(filename, server_getfilename(convs_ifo.fd), sizeof(filename)-1);
+		if (filename[0]==0) {
+			break;
+		}
+		filesend(convs_ifo.fd, filename);
+		memset(filename, 0, sizeof(filename));
+	};
 	return NULL;
 }
 

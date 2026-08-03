@@ -42,7 +42,7 @@ int filesend(int fd, char* filename)
 }
 
 //client请求拉取目录后，服务端将会发送目录下的所有文件，然后client将要接收的文件名对应的index发送给服务端，服务端将会发送该文件
-char* getfilename(int fd)
+char* server_getfilename(int fd)
 {
     char dirname[100]="./";
     DIR* dir_st=opendir(dirname);
@@ -53,9 +53,11 @@ char* getfilename(int fd)
     accement acm;
     acm.code=0;
     acm.cmd=directorytransmission;
+    acm.code=DATA;
     
     for (int i=0; ; i++) {
         entry=readdir(dir_st);
+        acm.index=i;
         if (entry==NULL) {
             break;
         }
@@ -66,8 +68,30 @@ char* getfilename(int fd)
             send(fd, &acm, sizeof(acm), 0);
         }
     }
+    acm.code=ENDL;
+    send(fd, &acm, sizeof(acm), 0);
     recv(fd, &recv_buf, sizeof(recv_buf), 0);
     return filelist[recv_buf.index]; //返回指定文件名，实际应用中可以根据需要修改
     closedir(dir_st);
     return NULL;
+}
+
+void client_selectfile(int fd)
+{
+    accement recv_buf;
+    while (recv(fd, &recv_buf, sizeof(recv_buf), 0)) {
+        if (recv_buf.code==ENDL) {
+            break;
+        }
+        printf("%d.%s\n",recv_buf.index,recv_buf.sendbuf);
+    }
+    int index=0;
+    printf("please input the index of file you want to download:\n");
+    scanf("%d", &index);
+    accement acm;
+    acm.code=DATA;
+    acm.cmd=directorytransmission;
+    acm.index=index;
+    send(fd, &acm, sizeof(acm), 0);
+return;
 }
