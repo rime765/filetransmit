@@ -29,14 +29,15 @@ typedef enum{
 typedef struct{
     filecode code;
     command cmd;
-    char sendbuf[20];
+    char bitstring[20];
     int index;
 } accement;
 
 
 
 int filesend(int fd, char* filename);
-void client_selectfile(int fd);
+char* client_selectfile(int fd);
 char* server_getfilename(int fd);
+int client_recvfile(int fd, char* filename);
 
 #endif

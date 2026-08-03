@@ -1,4 +1,4 @@
 build:
-	gcc client.c accement.c -o client.out
-	gcc server.c accement.c -o server.out
+	gcc client.c accementclient.c -o client.out
+	gcc server.c accementserver.c -o server.out
 	@./server.out

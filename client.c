@@ -101,33 +101,6 @@ void* thread_recv(void* sock)
 	int fd=0;
 	usleep(1000);
 	while (1) {
-		recv(convs_ifo.fd, cvbuf, sizeof(cvbuf)-1,0);//接收代码存在问题
-		printf("recv:        %s\n",cvbuf);
-		if (strcmp(cvbuf, "strt")==0) {
-			memset(cvbuf, 0, sizeof(filename));
-
-			recv(convs_ifo.fd, filename, sizeof(cvbuf)-1,0);
-			printf("filename: %s\n", filename);
-			if((fd=open(filename, O_RDWR|O_CREAT,0777))!=-1)
-			{
-				memset(filename, 0, sizeof(filename));
-				lseek(fd, 0, SEEK_SET);
-				continue;
-			}
-			else {
-				perror("open erro");
-				pthread_cancel(pthread_self());
-			}
-		}
-		else if (strcmp(cvbuf, "endl")==0) {
-			memset(cvbuf, 0, sizeof(filename));
-			close(fd);
-			break;
-		}
-		else {
-			write(fd, cvbuf	,strlen(cvbuf));
-			memset(cvbuf, 0, sizeof(filename));
-		}
 	}
 
 	return NULL;
@@ -139,19 +112,23 @@ void* thread_send(void* sock)
 
     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
     pthread_cond_wait(&cond, &mutex);
-	
-	sleep(1);
+
     printf("thread_send: prepared\n");
 
     pthread_mutex_lock(&mutex);
     convstion convs_ifo=*(convstion*)sock;
     pthread_mutex_unlock(&mutex);
 
-	char sdbuf[10]={0};
-	scanf("%s",sdbuf);
-	send(convs_ifo.fd, sdbuf, strlen(sdbuf), 0);
+ 	while(1){
+		if(client_recvfile(convs_ifo.fd, client_selectfile(convs_ifo.fd))==-1)
+		{
+			puts("file recv error");
+			break;
+		}
+		puts("file recv success\n");
+		getchar();
+ 	}
 
-
-    while(1);
+   
     return NULL;
 }
