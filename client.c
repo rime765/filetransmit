@@ -121,14 +121,11 @@ void* thread_send(void* sock)
     pthread_mutex_unlock(&mutex);
 
  	while(1){
-		if(client_recvfile(convs_ifo.fd, client_selectfile(convs_ifo.fd))==-1)
-		{
+		if(client_recvfile(convs_ifo.fd, client_selectfile(convs_ifo.fd))==-1){
 			puts("file recv error");
 			break;
 		}
 		puts("file recv success\n");
-		getchar();
  	}
-
     return NULL;
 }

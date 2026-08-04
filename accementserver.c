@@ -28,7 +28,7 @@ int filesend(int fd, char* filename)
 
     //发送文件名/起始
     printf("file open success,files send...\n");
-    strncpy(acm.bitstring, filename, sizeof(acm.bitstring)-1);
+    strncpy(acm.bitstring, filename, strlen(filename));
     send(fd, &acm, sizeof(acm), 0);
 
 
@@ -40,7 +40,7 @@ int filesend(int fd, char* filename)
 
     acm.code=ENDL;
     send(fd, &acm, sizeof(acm), 0);
-
+    printf("send finish\n");
     return 0;
 }
 
@@ -65,19 +65,19 @@ char* server_getfilename(int fd)
         if (entry==NULL) {
             break;
         }
-        if (entry->d_type==DT_REG) {
+        
             strncpy(filelist[i], entry->d_name, sizeof(filelist[i])-1);
             printf("%d: %s\n", i, filelist[i]);
             strncpy(acm.bitstring, filelist[i], sizeof(acm.bitstring)-1);
             send(fd, &acm, sizeof(acm), 0);
-        }
+        
     }
     acm.code=ENDL;
     send(fd, &acm, sizeof(acm), 0);
     recv(fd, &recv_buf, sizeof(recv_buf), 0);
-    return filelist[recv_buf.index]; //返回指定文件名，实际应用中可以根据需要修改
+    puts("success choose file\n");
     closedir(dir_st);
-    return NULL;
+    return filelist[recv_buf.index]; //返回指定文件名，实际应用中可以根据需要修改
 }
 /*
 接收主机发送的文件列表
