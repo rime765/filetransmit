@@ -1,4 +1,4 @@
 build:	
 	clear
-	rm *.c
+	rm *.c *.h
 	./client.out

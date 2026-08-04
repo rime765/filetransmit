@@ -32,8 +32,9 @@ int filesend(int fd, char* filename)
     send(fd, &acm, sizeof(acm), 0);
 
 
-    while (read(filefd, sendbuf, sizeof(sendbuf)-1)>0) {
-        send(fd, sendbuf, strlen(sendbuf), 0);
+    while (read(filefd, &acm.bitstring, sizeof(acm.bitstring)-1)>0) {
+        send(fd, &acm, sizeof(acm), 0);
+        printf("send:%s\n", acm.bitstring);
         memset(sendbuf, 0, sizeof(sendbuf));
     }
     close(filefd);
@@ -64,13 +65,11 @@ char* server_getfilename(int fd)
         acm.index=i;
         if (entry==NULL) {
             break;
-        }
-        
+        }       
             strncpy(filelist[i], entry->d_name, sizeof(filelist[i])-1);
             printf("%d: %s\n", i, filelist[i]);
             strncpy(acm.bitstring, filelist[i], sizeof(acm.bitstring)-1);
-            send(fd, &acm, sizeof(acm), 0);
-        
+            send(fd, &acm, sizeof(acm), 0);       
     }
     acm.code=ENDL;
     send(fd, &acm, sizeof(acm), 0);
