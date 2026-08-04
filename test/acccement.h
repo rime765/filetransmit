@@ -1,5 +1,5 @@
-#ifndef __ACCEMENT
-#define __ACCEMENT
+#ifndef __ACCEMENT_H
+#define __ACCEMENT_H
 #include <netinet/in.h>
 #include <pthread.h>
 #include <sys/socket.h>
