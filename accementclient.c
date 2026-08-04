@@ -32,6 +32,7 @@ char* client_selectfile(int fd)
     acm.cmd=directorytransmission;
     acm.index=index;
     send(fd, &acm, sizeof(acm), 0);
+        printf("select file name:%s\n", filelist[index]);
 return filelist[index];
 }
 
@@ -41,6 +42,7 @@ int client_recvfile(int fd, char* filename)
 {
     accement recv_buf;
     char filebuf[20]={0};
+    printf("recv file name:%s\n", filename);
     int filefd=open(filename, O_RDWR|O_CREAT, 0777);
     if (filefd==-1) {
         perror("open file error");
@@ -52,9 +54,10 @@ int client_recvfile(int fd, char* filename)
         if (recv_buf.code==ENDL) {
             break;
         }
-        printf("%s", recv_buf.bitstring);
+        printf("本次接收：%s\n", recv_buf.bitstring);
         write(filefd, recv_buf.bitstring, strlen(recv_buf.bitstring));
     }
+    printf("file recv success\n");
     close(filefd);
     return 0;
 }

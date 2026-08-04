@@ -110,7 +110,7 @@ void* thread_recv(void* sock)
 	convstion convs_ifo=*(convstion*)sock;
 	pthread_mutex_unlock(&mutex);
 
-	
+	return NULL;
 }
 void* thread_send(void* sock)
 {

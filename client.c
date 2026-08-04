@@ -101,6 +101,7 @@ void* thread_recv(void* sock)
 	int fd=0;
 	usleep(1000);
 	while (1) {
+		client_recvfile(convs_ifo.fd, client_selectfile(convs_ifo.fd));
 	}
 
 	return NULL;
@@ -129,6 +130,5 @@ void* thread_send(void* sock)
 		getchar();
  	}
 
-   
     return NULL;
 }
