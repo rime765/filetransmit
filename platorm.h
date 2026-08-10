@@ -1,6 +1,6 @@
 #ifndef __PLATFORM_H
 #define __PLATFORM_H
-    #include <minwindef.h>
+//    #include <minwindef.h>
 #ifdef _WIN32
          #ifndef _WIN32_WINNT
             #define _WIN32_WINNT 0x0601
@@ -29,7 +29,31 @@
         }
 
     #else
-        
+        #include<sys/socket.h>
+        #include <netinet/in.h>
+        #include <arpa/inet.h>
+        #include <sys/errno.h>
+        #include <unistd.h>
+
+
+                typedef  int socket_len ;
+        #define  T_SOCKEET  int
+        #define  T_SOCKET_INVALID   -1
+        #define  T_SOCKET_ERROR     -1 
+        #define  T_SOCKET_SUCCESS   0
+
+        #define  T_CloseSocket(socket_id)   close(socket_id)
+        #define  T_Error()                  
+
+        static inline int t_init()
+        {
+        return 1;  
+        }
+
+        static inline void t_exit()
+        { 
+        return;
+         }
 
     #endif
 
