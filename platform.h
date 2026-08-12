@@ -1,7 +1,11 @@
 #ifndef __PLATFORM_H
 #define __PLATFORM_H
 //    #include <minwindef.h>
-#ifdef _WIN32
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
+    #ifdef _WIN32
          #ifndef _WIN32_WINNT
             #define _WIN32_WINNT 0x0601
         #endif
@@ -14,8 +18,9 @@
         #define  T_SOCKET_ERROR     SOCKET_ERROR 
         #define  T_SOCKET_SUCCESS   0
 
-        #define  T_CloseSocket(socket_id)   close(socket_id)
+        #define  T_CloseSocket(socket_id)   closesocket(socket_id)
         #define  T_Error()                  WSAGETLASTERROR();
+        static inline void  T_ERROR_Print(char* str){ fprintf(stderr,"%s",str);}
 
         static inline int t_init()
         {
@@ -44,7 +49,7 @@
 
         #define  T_CloseSocket(socket_id)   close(socket_id)
         #define  T_Error()                  
-
+         #define  T_ERROR_Print(str) perror(stderro,"%s",str)
         static inline int t_init()
         {
         return 1;  
@@ -54,7 +59,7 @@
         { 
         return;
         }
-
+        static inline void  T_ERROR_Print(char* str){ perror(str);}
     #endif
 
 #endif
