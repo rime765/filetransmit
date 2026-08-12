@@ -1,4 +1,4 @@
-#include "../protocol.h"
+#include "../include/protocol.h"
 #include <WinSock2.h>
 #include <stdint.h>
 #include <winbase.h>

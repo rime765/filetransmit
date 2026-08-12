@@ -1,7 +1,5 @@
-#include "../platform.h"
-#include "../protocol.h"
-#include <WinSock2.h>
-#include <stdio.h>
+#include "../include/platform.h"
+#include "../include/protocol.h"
 #define DEFAULT_PORT 7889
 
 int main ()
@@ -31,7 +29,7 @@ int main ()
     connect_addr.sin_addr.s_addr=htonl(INADDR_ANY);
 
     if(
-    -1==bind(conetsock,(struct sockaddr*)&connect_addr,sizeof(connect_addr));
+    -1==bind(conetsock,(struct sockaddr*)&connect_addr,sizeof(connect_addr))
     ){
          T_ERROR_Print("套接字绑定失败\n");
         T_CloseSocket(conetsock);
@@ -49,11 +47,15 @@ int main ()
         accept(conetsock, &comuc_addr, &communicate_len);
         if (comuc_socket!=0) {
         puts("连接成功");
-        char recv_buf[1024];
-        recv(comuc_socket, recv_buf,sizeof(MSGhead_t),0);
-        
+        MSGhead_t recv_buf;
+        recv(comuc_socket, (char*)&recv_buf,sizeof(MSGhead_t),0);
+        MSG_ntoh(&recv_buf);
+        MSG_status_str(recv_buf.msg_status);
+        puts("传输完成");
+        t_exit();
+        return 0;
         }
-
+        
     }
 
     
