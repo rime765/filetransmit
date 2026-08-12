@@ -1,4 +1,5 @@
 #include "../include/protocol.h"
+
 #include <WinSock2.h>
 #include <stdint.h>
 #include <winbase.h>
@@ -10,6 +11,7 @@ int MSG_init(MSGhead_t *packhead,uint16_t msg_type, uint16_t msg_status) {
 	packhead->magic     =PROTO_MAGIC;
 	packhead->msg_status=msg_status;
 	packhead->msg_status=msg_status;
+	return 1;
 }
 /*转换到网络字节序*/
 int MSG_hton(MSGhead_t* host_MSGhead){

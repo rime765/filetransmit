@@ -51,12 +51,10 @@ int main ()
         recv(comuc_socket, (char*)&recv_buf,sizeof(MSGhead_t),0);
         MSG_ntoh(&recv_buf);
         MSG_status_str(recv_buf.msg_status);
-        puts("传输完成");
+        printf("传输完成%s\n",MSG_status_str(recv_buf.msg_status));
         t_exit();
         return 0;
         }
         
     }
-
-    
 }

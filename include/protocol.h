@@ -2,7 +2,6 @@
 #define PROTOCOL_H
 
 #include "platform.h"
-#include <cstdint>
 #include <stdint.h>
 
 
