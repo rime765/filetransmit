@@ -1,3 +1,3 @@
 code .
-exit
 pause
+exit

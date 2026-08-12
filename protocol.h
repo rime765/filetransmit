@@ -3,6 +3,7 @@
 
 #include "platform.h"
 #include <cstdint>
+#include <stdint.h>
 
 
 // 数据包头魔数 TINY
@@ -45,15 +46,15 @@ typedef struct{
     char path[MAX_PATH_LEN];
 } MSGhead_t;
 /*初始化数据包头*/
-int MSG_init(MSGhead_t packhead) ;
+int MSG_init(MSGhead_t* packhead,uint16_t msg_type, uint16_t msg_status) ;
 /*转换到网络字节序*/
-int MSG_hton(MSGhead_t host_MSGhead);
+int MSG_hton(MSGhead_t *host_MSGhead);
 /*转换回主机字节序*/
-int MSG_ntoh(MSGhead_t net_MSGhead);
+int MSG_ntoh(MSGhead_t *net_MSGhead);
 /*状态转换为字符串*/
-void MSG_status_str(uint16_t status);
+const char* MSG_status_str(uint16_t status);
 /*类型转换为字符串 */
-void MSG_type_str(uint16_t type);
+const char* MSG_type_str(uint16_t type);
 
 
 #endif
