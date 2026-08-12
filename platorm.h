@@ -53,11 +53,8 @@
         static inline void t_exit()
         { 
         return;
-         }
+        }
 
     #endif
-
-
-
 
 #endif
