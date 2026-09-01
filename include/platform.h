@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <limits.h>
 
 
     #ifdef _WIN32
@@ -19,6 +20,7 @@
         #define  T_SOCKEET  SOCKET
         #define  T_SOCKET_INVALID   INVALID_SOCKET
         #define  T_SOCKET_ERROR     SOCKET_ERROR 
+        #define  T_SOCKET_SUCCESS   (!INVALID_SOCKET&&!SOCKET_ERROR)
 
         #define  T_CloseSocket(socket_id)   closesocket(socket_id)
         #define  T_Error()                  WSAGETLASTERROR();
