@@ -5,18 +5,20 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
+
     #ifdef _WIN32
          #ifndef _WIN32_WINNT
             #define _WIN32_WINNT 0x0601
         #endif
         #include<WinSock2.h>
         #include <Windows.h>
+        #include <ws2tcpip.h>
 
         typedef  int socket_len ;
         #define  T_SOCKEET  SOCKET
         #define  T_SOCKET_INVALID   INVALID_SOCKET
         #define  T_SOCKET_ERROR     SOCKET_ERROR 
-        #define  T_SOCKET_SUCCESS   0
 
         #define  T_CloseSocket(socket_id)   closesocket(socket_id)
         #define  T_Error()                  WSAGETLASTERROR();
@@ -49,10 +51,12 @@
 
         #define  T_CloseSocket(socket_id)   close(socket_id)
         #define  T_Error()                  
-         #define  T_ERROR_Print(str) perror(stderro,"%s",str)
+        static inline void T_ERRO_Print(char* str){
+            perror(str);
+        }
         static inline int t_init()
         {
-        return 1;  
+        return 0;  
         }
 
         static inline void t_exit()

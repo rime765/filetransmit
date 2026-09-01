@@ -1,18 +1,20 @@
 #include "../include/protocol.h"
 
-#include <WinSock2.h>
+//#include <WinSock2.h>
 #include <stdint.h>
-#include <winbase.h>
+//#include <winbase.h>
 
 /*初始化数据包头*/
 int MSG_init(MSGhead_t *packhead,uint16_t msg_type, uint16_t msg_status) {
 	memset(packhead,0,sizeof(*packhead));
 
 	packhead->magic     =PROTO_MAGIC;
-	packhead->msg_status=msg_status;
+	packhead->msg_type  =msg_type;
 	packhead->msg_status=msg_status;
 	return 1;
 }
+
+
 /*转换到网络字节序*/
 int MSG_hton(MSGhead_t* host_MSGhead){
 	host_MSGhead->msg_status	=htons(host_MSGhead->msg_status);
@@ -20,12 +22,14 @@ int MSG_hton(MSGhead_t* host_MSGhead){
 	host_MSGhead->msg_type		=htons(host_MSGhead->msg_type);
 	host_MSGhead->payload_size	=htonl(host_MSGhead->payload_size);
 
-	uint32_t L_filesize=host_MSGhead->filesize & ~0x1111111100000000;
-	uint32_t H_filesize=host_MSGhead->filesize >> 32;
+	uint32_t L_filesize=(uint32_t)host_MSGhead->filesize;
+	uint32_t H_filesize=(uint32_t)(host_MSGhead->filesize >> 32);
 
-	host_MSGhead->filesize=htonl(L_filesize)   | (uint64_t)htonl(H_filesize)<<32;
+	host_MSGhead->filesize=(uint64_t)htonl(L_filesize) | (uint64_t)htonl(H_filesize)<<32;
 	return 1;
 }
+
+
 /*转换回主机字节序*/
 int MSG_ntoh(MSGhead_t* net_MSGhead){
 	net_MSGhead->msg_status		=ntohs(net_MSGhead->msg_status);
@@ -33,13 +37,15 @@ int MSG_ntoh(MSGhead_t* net_MSGhead){
 	net_MSGhead->msg_type		=ntohs(net_MSGhead->msg_type);
 	net_MSGhead->payload_size	=ntohl(net_MSGhead->payload_size);
 
-	uint32_t L_filesize=net_MSGhead->filesize & ~0x1111111100000000;
-	uint32_t H_filesize=net_MSGhead->filesize >> 32;
+	uint32_t L_filesize=(uint32_t)net_MSGhead->filesize;
+	uint32_t H_filesize=(uint32_t)(net_MSGhead->filesize >> 32);
 
-	net_MSGhead->filesize=ntohl(L_filesize)   | (uint64_t)ntohl(H_filesize)<<32;
+	net_MSGhead->filesize=(uint64_t)ntohl(L_filesize) | (uint64_t)ntohl(H_filesize)<<32;
 	return 1;
 }
 /*状态转换为字符串*/
+
+
 const char* MSG_status_str(uint16_t status){
 	switch (status) {
 	case STATUS_ACCESS_DENIED:	return "ACCESS_DENIED" ;
@@ -50,6 +56,8 @@ const char* MSG_status_str(uint16_t status){
 	default:					return "Unknown";
 	}
 }
+
+
 /*类型转换为字符串 */
 const char* MSG_type_str(uint16_t type){
 	switch (type) {
