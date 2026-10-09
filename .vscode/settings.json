@@ -1,3 +1,6 @@
 {
-    "clangd.arguments": ["--header-insertion=never"]
+    "clangd.arguments": [
+        "--header-insertion=never"
+    ],
+    "terminal.integrated.defaultProfile.linux": ""
 }

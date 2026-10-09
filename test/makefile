@@ -12,3 +12,8 @@ winC:
 	cls
 	@gcc client.c ../models/protocol.c ../models/transport.c -o client.exe -lws2_32
 	@./client.exe
+
+linC:
+	clear
+	@gcc client.c ../models/protocol.c ../models/transport.c -o client.out
+	@./client.out

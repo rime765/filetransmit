@@ -1,4 +1,4 @@
-#ifndef __PLATFORM_H
+﻿#ifndef __PLATFORM_H
 #define __PLATFORM_H
 //    #include <minwindef.h>
 #include <stdio.h>
@@ -26,6 +26,7 @@
         #define  T_Error()                  WSAGETLASTERROR();
         static inline void  T_ERROR_Print(char* str){ fprintf(stderr,"%s",str);}
 
+        #define T_CHCP SetConsoleCP(65001);SetConsoleOutputCP(65001)
         static inline int t_init()
         {
             WSADATA wsa_data;
@@ -43,7 +44,7 @@
         #include <arpa/inet.h>
         #include <sys/errno.h>
         #include <unistd.h>
-
+        #define T_CHCP
 
                 typedef  int socket_len ;
         #define  T_SOCKEET  int
